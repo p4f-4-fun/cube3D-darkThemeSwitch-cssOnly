@@ -1,0 +1,180 @@
+* {
+    box-sizing: border-box;
+
+    font-optical-sizing: auto;
+    font-style: normal;
+
+    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
+
+    padding: 0;
+    padding-block: 0;
+    padding-inline: 0;
+}
+
+:root {
+    --black: 24,24,24;
+    --white: 249,249,249;
+    --box-shadow-top: 255,255,255;
+    --box-shadow-bottom: var(--black);
+    --box-shadow: 1rem 1rem 1rem rgba(var(--box-shadow-bottom), 0.1), -1rem -1rem 1rem rgba(var(--box-shadow-top), 1);
+    --bg-color: rgba(var(--white), 1);
+    --cube-border: none;
+    --cube-side-front: green;
+    --cube-side-back: blue;
+    --cube-side-left: orange;
+    --cube-side-right: red;
+    --cube-side-top: white;
+    --cube-side-bottom: yellow;
+    --font-color: rgba(var(--black), 1);
+}
+
+:root:has(#input-dark:checked) {
+    --black: 24,24,24;
+    --white: 249,249,249;
+    --box-shadow-top: var(--black);
+    --box-shadow-bottom: 255,255,255;
+    --box-shadow: -.5rem -.5rem rgba(var(--white), 1), .25rem .25rem .5rem rgba(var(--white), 0.1);
+    --bg-color: rgba(var(--black), 1);
+    --color-white: rgba(var(--white), 1);
+    --cubeSidesColor: var(--bg-color);
+    --cube-border: 2px solid var(--color-white);
+    --cube-side-front: var(--cubeSidesColorIfDark);
+    --cube-side-back: var(--cubeSidesColorIfDark);
+    --cube-side-left: var(--cubeSidesColorIfDark);
+    --cube-side-right: var(--cubeSidesColorIfDark);
+    --cube-side-top: var(--cubeSidesColorIfDark);
+    --cube-side-bottom: var(--cubeSidesColorIfDark);
+    --font-color: var(--color-white);
+}
+
+html {
+    font-size: 62.5%;
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 35%;
+    }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    font-family: "Karla", system-ui, sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    height: 100vh;
+    width: 100vw;
+}
+
+.page-theme-toggler,
+.cube-inner-perspective {
+    align-items: center;
+    aspect-ratio: 3/2;
+    display: flex;
+    justify-content: center;
+    left: 5vw;
+    position: absolute;
+    top: 5vh;
+    transition: box-shadow 0.25s linear, transform 0.25s linear;
+    width: 10vw;
+    width: clamp(10rem, 10vw, 15vw);
+}
+
+.cube-inner-perspective {
+    top: 20vh;
+}
+
+.page-theme-toggler:hover,
+.cube-inner-perspective:hover {
+    box-shadow: var(--box-shadow);
+    transform: translateX(1vw) translateY(1vh);
+}
+
+.input-container, label {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+}
+
+input {
+    height: 0;
+    pointer-events: none;
+    transform: translateX(-100vw);
+    width: 0;
+    z-index: -10;
+}
+
+main {
+    align-items: center;
+    cursor: move;
+    display: flex;
+    height: inherit;
+    justify-content: center;
+    overflow: hidden;
+    width: inherit;
+}
+
+.cube-inner-perspective:has(#input-perspective:checked) + main > .container {
+    --perspective: 5vw;
+    width: calc(var(--perspective) * 12);
+}
+
+.container {
+    align-items: center;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    --perspective: 60vw;
+    perspective: var(--perspective);
+    width: var(--perspective);
+    z-index: -1;
+}
+
+.cube {
+    aspect-ratio: 1;
+    position: relative;
+    transform-style: preserve-3d;
+    --width: 25vw;
+    width: var(--width);;
+}
+.side {
+    align-items: center;
+    aspect-ratio: 1;
+    border: var(--cube-border);
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: var(--width);
+}
+.front.side {
+    background-color: var(--cube-side-front);
+    transform: translateZ(calc(var(--width) / 2));
+}
+.back.side {
+    background-color: var(--cube-side-back);
+    transform: rotateY(180deg) translateZ(calc(var(--width) / 2));
+}
+.left.side {
+    background-color: var(--cube-side-left);
+    transform: rotateY(-90deg) translateZ(calc(var(--width) / 2));
+}
+.right.side {
+    background-color: var(--cube-side-right);
+    transform: rotateY(90deg) translateZ(calc(var(--width) / 2));
+}
+.top.side {
+    background-color: var(--cube-side-top);
+    transform: rotateX(90deg) translateZ(calc(var(--width) / 2));
+}
+.bottom.side {
+    background-color: var(--cube-side-bottom);
+    transform: rotateX(-90deg) translateZ(calc(var(--width) / 2));
+}
+
+
