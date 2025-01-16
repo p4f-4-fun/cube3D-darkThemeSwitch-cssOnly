@@ -16,7 +16,7 @@ const setCubeInteractive = () => {
 
     // Actual time in cube
     const timeInterval = () => {
-        sideElements.forEach(element => element.textContent = (new Date()).toLocaleTimeString());
+        sideElements.forEach(element => element.innerHTML = (new Date()).toLocaleTimeString());
         setTimeout(timeInterval, 1000);
     };
 

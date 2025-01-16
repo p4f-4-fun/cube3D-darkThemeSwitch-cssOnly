@@ -11,6 +11,9 @@
     padding: 0;
     padding-block: 0;
     padding-inline: 0;
+
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 :root {
@@ -28,34 +31,32 @@
     --cube-side-top: white;
     --cube-side-bottom: yellow;
     --font-color: rgba(var(--black), 1);
+    --transition-duration: 0.25s;
 }
 
 :root:has(#input-dark:checked) {
-    --black: 24,24,24;
-    --white: 249,249,249;
     --box-shadow-top: var(--black);
     --box-shadow-bottom: 255,255,255;
     --box-shadow: -.5rem -.5rem rgba(var(--white), 1), .25rem .25rem .5rem rgba(var(--white), 0.1);
     --bg-color: rgba(var(--black), 1);
-    --color-white: rgba(var(--white), 1);
-    --cubeSidesColor: var(--bg-color);
-    --cube-border: 2px solid var(--color-white);
-    --cube-side-front: var(--cubeSidesColorIfDark);
-    --cube-side-back: var(--cubeSidesColorIfDark);
-    --cube-side-left: var(--cubeSidesColorIfDark);
-    --cube-side-right: var(--cubeSidesColorIfDark);
-    --cube-side-top: var(--cubeSidesColorIfDark);
-    --cube-side-bottom: var(--cubeSidesColorIfDark);
-    --font-color: var(--color-white);
+    --color-white-rgba: rgba(var(--white), 1);
+    --cube-sides-color-dark-theme: transparent;
+    --cube-border: 2px solid var(--color-white-rgba);
+    --cube-side-front: var(--cube-sides-color-dark-theme);
+    --cube-side-back: var(--cube-sides-color-dark-theme);
+    --cube-side-left: var(--cube-sides-color-dark-theme);
+    --cube-side-right: var(--cube-sides-color-dark-theme);
+    --cube-side-top: var(--cube-sides-color-dark-theme);
+    --cube-side-bottom: var(--cube-sides-color-dark-theme);
+    --font-color: var(--color-white-rgba);
 }
 
 html {
     font-size: 62.5%;
 }
-
 @media screen and (max-width: 768px) {
     html {
-        font-size: 35%;
+        font-size: 31.25%;
     }
 }
 
@@ -63,9 +64,10 @@ body {
     background-color: var(--bg-color);
     color: var(--font-color);
     font-family: "Karla", system-ui, sans-serif;
-    font-size: 1.6rem;
+    font-size: 2.4rem;
     font-weight: 600;
     height: 100vh;
+    transition: background-color var(--transition-duration) linear;
     width: 100vw;
 }
 
@@ -76,11 +78,13 @@ body {
     display: flex;
     justify-content: center;
     left: 5vw;
+    overflow: hidden;
     position: absolute;
     top: 5vh;
-    transition: box-shadow 0.25s linear, transform 0.25s linear;
-    width: 10vw;
-    width: clamp(10rem, 10vw, 15vw);
+    transition: box-shadow var(--transition-duration) linear, transform var(--transition-duration) linear;
+    --togglers-width: 10vw;
+    width: var(--togglers-width);
+    width: clamp(15rem, var(--togglers-width), calc(var(--togglers-width) * 1.5));
 }
 
 .cube-inner-perspective {
@@ -104,7 +108,6 @@ body {
 
 input {
     height: 0;
-    pointer-events: none;
     transform: translateX(-100vw);
     width: 0;
     z-index: -10;
@@ -124,7 +127,6 @@ main {
     --perspective: 5vw;
     width: calc(var(--perspective) * 12);
 }
-
 .container {
     align-items: center;
     aspect-ratio: 1;
@@ -132,6 +134,7 @@ main {
     justify-content: center;
     --perspective: 60vw;
     perspective: var(--perspective);
+    transition: perspective calc(var(--transition-duration) * 1.5) ease-in;
     width: var(--perspective);
     z-index: -1;
 }
@@ -150,6 +153,7 @@ main {
     display: flex;
     justify-content: center;
     position: absolute;
+    transition: background-color var(--transition-duration) linear;
     width: var(--width);
 }
 .front.side {
